@@ -3,6 +3,7 @@ import { Button, FlatList, Image, Platform, StyleSheet, Text, View } from 'react
 
 import styles from './../styles/default.js';
 import ListItem from './../components/ListItem.js';
+import ListItemTitle from './../components/ListItemTitle.js';
 
 
 const interval = cb => setInterval(cb => cb(), 5000, cb);
@@ -86,6 +87,8 @@ export default class ScreenDetail extends React.Component {
           percentChange: keyCached.percentChange,
         })
       };
+
+      // TODO: Sort logic.
       
       this.setState(previousState => (
         {
@@ -130,7 +133,16 @@ export default class ScreenDetail extends React.Component {
           }
         />
 
-        <FlatList style={{ borderWidth: 1, display: 'flex', flex: 1 }}
+        <ListItemTitle
+          title={{
+            name: 'Name',
+            last: 'Last',
+            highestBid: 'High',
+            percentChange: 'Percent',
+          }}
+        />
+
+        <FlatList style={{display: 'flex', flex: 1 }}
           data={this.state.ticker}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
