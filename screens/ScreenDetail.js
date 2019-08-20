@@ -59,14 +59,14 @@ export default class ScreenDetail extends React.Component {
 
   async getTicker() {
     try {
-      let response = await fetch(
+      const response = await fetch(
         'https://poloniex.com/public?command=returnTicker'
       );
-      let responseJSON = await response.json();
+      const responseJSON = await response.json();
 
       const data = [];
 
-      for(let key in responseJSON) {
+      for(const key in responseJSON) {
         const keyCached = responseJSON[key];
 
         if(!keyCached.last) {
@@ -99,20 +99,7 @@ export default class ScreenDetail extends React.Component {
       console.error(err);
     }
   }
-
-  _keyExtractor = (item, index) => `${index}`
-
-  _renderItem = ({item, index}) => (
-    <ListItem
-      id={item.id}
-      name={item.name}
-      last={item.last}
-      highestBid={item.highestBid}
-      percentChange={item.percentChange}
-      index={index}
-    />
-  )
-
+  
   render() {
     return (
       <View style={ styles.container }>
@@ -128,24 +115,44 @@ export default class ScreenDetail extends React.Component {
           }
         />
 
-        <FlatList style={{display: 'flex', flex: 1 }}
-          data={this.state.ticker}
-          keyExtractor={this._keyExtractor}
-          renderItem={this._renderItem}
+        <Table
+          ticker={this.state.ticker}
           ListEmptyComponent={<ListEmpty/>}
           ListHeaderComponent={<ListHeader titles={this.state.listItemTitles}/>}
-          ListHeaderComponentStyle={{backgroundColor: 'white', borderBottomWidth: 1}}
-          stickyHeaderIndices={[0]}
-
-          // TODO: Implement the dispatchFetchPage logic
-          // onEndReached={() => dispatchFetchPage()}
-          initialNumToRender={8}
-          maxToRenderPerBatch={2}
-          onEndReachedThreshold={0.5}
         />
       </View>
     )
   }
+}
+
+function Table(props) {
+  const renderItem = ({ item, index }) => (
+    <ListItem
+      id={item.id}
+      name={item.name}
+      last={item.last}
+      highestBid={item.highestBid}
+      percentChange={item.percentChange}
+      index={index}
+    />
+  );
+
+  return (
+    <FlatList style={{display: 'flex', flex: 1 }}
+      {...props}
+      keyExtractor={(item, index) => `${index}`}
+      data={props.ticker}
+      ListHeaderComponentStyle={{backgroundColor: 'white', borderBottomWidth: 1}}
+      stickyHeaderIndices={[0]}
+      renderItem={renderItem}
+
+      // TODO: Implement the dispatchFetchPage logic
+      // onEndReached={() => dispatchFetchPage()}
+      initialNumToRender={8}
+      maxToRenderPerBatch={2}
+      onEndReachedThreshold={0.5}
+    />
+  );
 }
 
 function ListEmpty() {
