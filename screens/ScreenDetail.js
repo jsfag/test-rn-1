@@ -4,6 +4,7 @@ import { Button, FlatList, Image, Platform, StyleSheet, Text, View } from 'react
 import styles from './../styles/default.js';
 import ListItem from './../components/ListItem.js';
 import ListItemTitle from './../components/ListItemTitle.js';
+import ItemCell from './../components/ItemCell.js';
 
 
 const interval = cb => setInterval(cb => cb(), 5000, cb);
@@ -12,7 +13,8 @@ export default class ScreenDetail extends React.Component {
   state = {
     ticker: [],
     count: 0,
-    isFocused: false
+    isFocused: false,
+    listItemTitles: ['Name', 'Last', 'High', 'Percent'],
   }
 
   // constructor(props) {
@@ -127,19 +129,34 @@ export default class ScreenDetail extends React.Component {
           }
         />
 
-        <ListItemTitle
-          title={{
-            name: 'Name',
-            last: 'Last',
-            highestBid: 'High',
-            percentChange: 'Percent',
-          }}
-        />
-
         <FlatList style={{display: 'flex', flex: 1 }}
           data={this.state.ticker}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+          ListEmptyComponent={() =>
+            <Text>
+              No data loaded.
+            </Text>
+          }
+          ListHeaderComponent={
+            <View style={{display: 'flex', flexDirection: 'row', padding: 8}}>
+              {this.state.listItemTitles.map((title, index) =>
+                <ItemCell
+                  key={index}
+                  title={title}
+                  style={{fontWeight: 'bold'}}
+                />
+              )}
+            </View>
+          }
+          ListHeaderComponentStyle={{backgroundColor: 'white', borderBottomWidth: 1}}
+          stickyHeaderIndices={[0]}
+
+          // TODO: Implement the dispatchFetchPage logic
+          // onEndReached={() => dispatchFetchPage()}
+          initialNumToRender={8}
+          maxToRenderPerBatch={2}
+          onEndReachedThreshold={0.5}
         />
       </View>
     )
