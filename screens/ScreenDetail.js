@@ -3,7 +3,6 @@ import { Button, FlatList, Image, Platform, StyleSheet, Text, View } from 'react
 
 import styles from './../styles/default.js';
 import ListItem from './../components/ListItem.js';
-import ListItemTitle from './../components/ListItemTitle.js';
 import ItemCell from './../components/ItemCell.js';
 
 
@@ -133,22 +132,8 @@ export default class ScreenDetail extends React.Component {
           data={this.state.ticker}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
-          ListEmptyComponent={() =>
-            <Text>
-              No data loaded.
-            </Text>
-          }
-          ListHeaderComponent={
-            <View style={{display: 'flex', flexDirection: 'row', padding: 8}}>
-              {this.state.listItemTitles.map((title, index) =>
-                <ItemCell
-                  key={index}
-                  title={title}
-                  style={{fontWeight: 'bold'}}
-                />
-              )}
-            </View>
-          }
+          ListEmptyComponent={<ListEmpty/>}
+          ListHeaderComponent={<ListHeader titles={this.state.listItemTitles}/>}
           ListHeaderComponentStyle={{backgroundColor: 'white', borderBottomWidth: 1}}
           stickyHeaderIndices={[0]}
 
@@ -161,4 +146,24 @@ export default class ScreenDetail extends React.Component {
       </View>
     )
   }
+}
+
+function ListEmpty() {
+  return (
+    <Text>No data loaded.</Text>
+  )
+}
+
+function ListHeader({ titles }) {
+  return (
+    <View style={{display: 'flex', flexDirection: 'row', padding: 8}}>
+      {titles.map((title, index) =>
+        <ItemCell
+          key={index}
+          title={title}
+          style={{fontWeight: 'bold'}}
+        />
+      )}
+    </View>
+  );
 }
