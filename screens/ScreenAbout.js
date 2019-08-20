@@ -5,15 +5,6 @@ import styles from './../styles/default.js';
 
 
 export default class ScreenAbout extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: 'About',
-      headerRight: (
-        <Text>Header Right</Text>
-      )
-    }
-  }
-
   render() {
     return (
       <View style={ styles.container }>

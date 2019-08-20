@@ -1,31 +1,33 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+
+import ItemCell from './../components/ItemCell.js';
 
 
 export default class ListItem extends React.PureComponent {
   colours() {
-    // console.log(this.props.index);
     return this.props.index % 2 == 0 ? '#81D4FA' : '#F48FB1';
   }
 
   render() {
     return (
       <View style={[styles.container, {backgroundColor: this.colours()}]}>
-        <Text style={[styles.paragraph, {fontWeight: 'bold', textAlign: 'left'}]}>
-          {this.props.name}
-        </Text>
+        <ItemCell
+          style={{fontWeight: 'bold', textAlign: 'left'}}
+          title={this.props.name}
+        />
 
-        <Text style={styles.paragraph}>
-          {this.props.last}
-        </Text>
+        <ItemCell
+          title={this.props.last}
+        />
 
-        <Text style={styles.paragraph}>
-          {this.props.highestBid}
-        </Text>
+        <ItemCell
+          title={this.props.highestBid}
+        />
 
-        <Text style={styles.paragraph}>
-          {this.props.percentChange}
-        </Text>
+        <ItemCell
+          title={this.props.percentChange}
+        />
       </View>
     );
   }
@@ -37,14 +39,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     flexDirection: 'row',
-    // borderWidth: 1,
     padding: 8,
-  },
-  paragraph: {
-    flex: 1,
-    fontSize: 14,
-    // fontWeight: 'bold',
-    textAlign: 'center',
-    // borderWidth: 1,
   },
 });

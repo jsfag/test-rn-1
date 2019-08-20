@@ -9,12 +9,6 @@ import ListItemTitle from './../components/ListItemTitle.js';
 const interval = cb => setInterval(cb => cb(), 5000, cb);
 
 export default class ScreenDetail extends React.Component {
-  static navigationOptions = () => {
-    return {
-      headerTitle: 'Detail',
-    }
-  }
-
   state = {
     ticker: [],
     count: 0,

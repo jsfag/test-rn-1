@@ -1,24 +1,25 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+
+import ItemCell from './../components/ItemCell.js';
+
+
 export default class ListItem extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.paragraph}>
-          {this.props.title.name}
-        </Text>
-
-        <Text style={styles.paragraph}>
-          {this.props.title.last}
-        </Text>
-
-        <Text style={styles.paragraph}>
-          {this.props.title.highestBid}
-        </Text>
-
-        <Text style={styles.paragraph}>
-          {this.props.title.percentChange}
-        </Text>
+        <ItemCell
+          title={this.props.title.name}
+        />
+        <ItemCell
+          title={this.props.title.last}
+        />
+        <ItemCell
+          title={this.props.title.highestBid}
+        />
+        <ItemCell
+          title={this.props.title.percentChange}
+        />
       </View>
     );
   }
@@ -31,11 +32,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 8,
     borderBottomWidth: 1,
-  },
-  paragraph: {
-    flex: 1,
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });

@@ -13,9 +13,18 @@ const RootStack = createStackNavigator(
   {
     About: {
       screen: ScreenAbout,
+      navigationOptions: () => ({
+        headerTitle: 'About',
+        headerRight: (
+          <Text>Header Right</Text>
+        )
+      }),
     },
     Details: {
       screen: ScreenDetail,
+      navigationOptions: () => ({
+        headerTitle: 'Detail',
+      }),
     },
   },
   // Params:
